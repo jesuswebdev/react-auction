@@ -1,0 +1,4 @@
+export default {
+  LOGIN_SUCCESS: 'USER/ LOGIN SUCCESS',
+  LOGOUT: 'USER/ LOGOUT'
+};
