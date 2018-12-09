@@ -1,19 +1,36 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React from "react";
+import { Layout } from "antd";
+import Footer from "./Footer";
+import Header from "./Header";
 
-const Layout = (props) => {
-  return ( <React.Fragment>
-    <h1>header</h1>
-    authenticated: {props.authenticated.toString()}
-    {props.children}
-    <h1>footer</h1>
-  </React.Fragment> );
-}
+const { Content } = Layout;
 
-const mapStateToProps = state => {
-  return {
-    authenticated: state.user.token !== null
+class AppLayout extends React.Component {
+  state = {
+    minHeight: 512,
+    padding: "32px"
+  };
+
+  setHeight = () => this.setState({ minHeight: window.innerHeight - 133 });
+
+  componentDidMount() {
+    this.setHeight();
+    window.addEventListener("resize", this.setHeight);
   }
-}
- 
-export default connect(mapStateToProps)(Layout);
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.setHeight);
+  }
+
+  render() {
+    return (
+      <Layout>
+        <Header />
+        <Content style={this.state}>{this.props.children}</Content>
+        <Footer />
+      </Layout>
+    );
+
+  }
+};
+export default AppLayout;
