@@ -9,7 +9,7 @@ const AuctionCardItem = ({ item }) => {
       <Card.Meta title={item.title} description={`${item.views} views`} />
       <p style={{ marginTop: "15px" }}>{`Current Bid: ${item.current_bid ||
         0}$`}</p>
-      <Link href={`/auction/${item._id}`} prefetch>
+      <Link href={`/auction/${item._id}`} passHref prefetch>
         <Button type="primary">Bid</Button>
       </Link>
     </Card>
