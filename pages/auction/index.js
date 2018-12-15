@@ -4,6 +4,7 @@ import { Client } from "nes";
 import { Card, Row, Col } from "antd";
 import { API_URL, API_WS_URL } from "../../config";
 import BidsTable from "../../components/BidsTable";
+import BiddingForm from "../../components/BiddingForm";
 
 class Auction extends React.Component {
   static async getInitialProps({ query: { id } }) {
@@ -19,7 +20,7 @@ class Auction extends React.Component {
   }
 
   state = {
-    bids: this.props.auction.bids.slice(0,9),
+    bids: this.props.auction.bids.slice(0, 9),
     current_bid: this.props.auction.current_bid,
     client: undefined
   };
@@ -51,16 +52,27 @@ class Auction extends React.Component {
 
   render() {
     const { auction } = this.props;
+    const currentBid = (this.state.current_bid || {}).amount || 0;
     return (
       <React.Fragment>
         <Row type='flex' justify='center' gutter={24}>
           <Col xs={22} md={11}>
-            <img src={auction.img} alt='img' />
+            <img
+              style={{ width: "100%", height: "auto" }}
+              src={auction.img}
+              alt='img'
+            />
           </Col>
           <Col xs={22} md={11}>
             <Card title={auction.title}>
               <p>{auction.description}</p>
-              <p>{`Current Bid: $${(this.state.current_bid || {}).amount || 0}`}</p>
+              {currentBid ? (
+                <p>{`Current Bid: $${currentBid}`}</p>
+              ) : (
+                <p>{`Minimun Bid: $${auction.minimun_bid}`}</p>
+              )}
+
+              <BiddingForm currentBid={currentBid} auction={auction._id} />
             </Card>
           </Col>
         </Row>

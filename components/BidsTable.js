@@ -14,6 +14,7 @@ const BidsTable = ({ bids }) => {
       columns={columns}
       rowKey={item => item._id}
       pagination={false}
+      locale={{emptyText: 'No bids registered'}}
     />
   );
 };

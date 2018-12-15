@@ -11,14 +11,14 @@ class Index extends React.Component {
     let newest;
     try {
       const {data: topAuctions} = await http.get(`${API_URL}/auction?limit=4&filter=top`);
-      const {data: newestAuctions} = await http.get(`${API_URL}/auction?limit=4&filter=new`);
+      // const {data: newestAuctions} = await http.get(`${API_URL}/auction?limit=4&filter=new`);
       top = topAuctions;
-      newest = newestAuctions;      
+      // newest = newestAuctions;      
     } catch (error) {
       top = 'There was an error...';
-      newest = 'There was an error...';
+      // newest = 'There was an error...';
     }
-    return {top, newest};
+    return {top};
   }
 
   render () {
@@ -27,7 +27,7 @@ class Index extends React.Component {
         <h1 style={{textAlign: 'center'}}>Top Auctions </h1>
         <Row type="flex" justify="center" gutter={16}>
           {this.props.top.map((item) => (
-            <Col xs={22} md={5} key={item._id}>
+            <Col xs={22} sm={11} lg={5} key={item._id}>
               <AuctionCardItem item={item} />
             </Col>
           ))}

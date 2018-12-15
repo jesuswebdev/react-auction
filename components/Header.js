@@ -1,19 +1,40 @@
 import React from 'react';
-import { Layout, Menu } from 'antd';
+import Link from 'next/link';
+import { connect } from 'react-redux';
+import { Layout, Menu, Row, Col } from 'antd';
 
 const { Header } = Layout;
+const { SubMenu } = Menu;
 
-const AppHeader = () => {
+const AppHeader = (props) => {
   return (
     <Header>
-      <div style={{color: 'white'}}>React Auction</div>
-      <Menu theme="dark"
-      mode="horizontal"
-      style={{lineHeight: '64px'}}>
-        
-      </Menu>
+      <Row>
+        <Col span={8}>
+          <Link href="/" passHref>
+            <div style={{color: 'white', width: '100px', textAlign: 'center', cursor: 'pointer'}}>React Auction</div>
+          </Link>
+        </Col>
+        <Col>
+          <Menu theme="dark"
+          mode="horizontal"
+          style={{lineHeight: '64px'}}>
+            <SubMenu title={props.user.name} style={{float: 'right'}}>
+              <Menu.Item>
+                Logout
+              </Menu.Item>
+            </SubMenu>
+          </Menu>
+        </Col>
+      </Row>
     </Header>
   );
 }
+
+const mapStateToProps = state => {
+  return {
+    user: state.user || {}
+  }
+}
  
-export default AppHeader;
+export default connect(mapStateToProps)(AppHeader);
